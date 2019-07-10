@@ -26,7 +26,7 @@ export function RecommendedProductsList() {
 				return (
 					<li key={product.name}>
 						<div>
-							<p><b>{product.name}</b><price>{product.price}<br />{product.inStock ? "In Sock" : "Not in stock"}</price></p>
+							<p><b>{product.name}</b><price>{product.price}<br />{product.inStock ? "In Stock" : "Not in stock"}</price></p>
 							{product.shortDesc}
 						</div>
 					</li>
