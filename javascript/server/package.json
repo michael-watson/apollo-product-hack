@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"No tests yet...\"",
+    "build": "npm install"
+  },
+  "dependencies": {
+    "apollo-datasource-rest": "^0.5.0",
+    "apollo-server": "^2.6.7",
+    "apollo-server-azure-functions": "^2.6.7",
+    "graphql": "^14.4.2"
+  },
+  "devDependencies": {}
+}

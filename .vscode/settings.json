@@ -1,0 +1,11 @@
+{
+	"files.exclude": {
+		"obj": true,
+		"bin": true
+	},
+	"azureFunctions.deploySubpath": "server",
+	"azureFunctions.projectLanguage": "JavaScript",
+	"azureFunctions.projectRuntime": "~2",
+	"debug.internalConsoleOptions": "neverOpen",
+	"azureFunctions.preDeployTask": "npm prune"
+}

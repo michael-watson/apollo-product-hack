@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "Apollo Server",
+			"path": "server"
+		},
+		{
+			"path": "recommendations-json-server"
+		},
+		{
+			"path": "client"
+		},
+		{
+			"path": "client-react-hooks"
+		}
+	],
+	"settings": {
+		"workbench.editor.labelFormat": "medium"
+	}
+}
