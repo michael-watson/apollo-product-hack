@@ -113,17 +113,17 @@ export class jsonServiceDatasource extends RESTDataSource {
 
 	* Define Schema:
 
-	```javascript
+	```typescript
 	const typeDefs = gql`
 		type Query {
-			me: User
+			me: User!
 		}
 		type User {
 			email: String!
-			sugProducts: [Product]
+			sugProducts: [Product!]!
 		}
 		type Product {
-			name: String
+			name: String!
 			shortDesc: String
 			price: Float
 			inStock: Boolean
@@ -305,14 +305,14 @@ import { ApolloServer, gql, AuthenticationError } from 'apollo-server-azure-func
 
 const typeDefs = gql`
 	type Query {
-		me: User
+		me: User!
 	}
 	type User {
 		email: String!
-		sugProducts: [Product]
+		sugProducts: [Product!]!
 	}
 	type Product {
-		name: String
+		name: String!
 		shortDesc: String
 		price: Float
 		inStock: Boolean
@@ -348,7 +348,8 @@ mkdir products-graphql-client
 cd products-graphql-client
 npx create-react-app .
 mkdir src/components
-npm install graphql graphql-tag apollo-client apollo-cache-inmemory apollo-link-context apollo-link-http @apollo/react-components @types/react @types/graphql
+npm install graphql graphql-tag apollo-client apollo-cache-inmemory apollo-link-context apollo-link-http react-apollo
+npm install @types/react @types/graphql --save-dev
 ```
 
 2. Let's add our Apollo Client to our project, open up the index.js and change it to be like below :
@@ -363,7 +364,7 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from 'react-apollo';
 
 const httpLink = new HttpLink({ uri: 'http://localhost:7071/graphql' });
 
@@ -390,18 +391,28 @@ ReactDOM.render(
 	document.getElementById('root'));
 ```
 
-3. Now we're going to create our first component that will use a GraphQL query:
+3. One of the benefits of using TypeScript is type safety. The Apollo CLI can generate your TypeScript types either based on a locally defined schema or a remote endpoint. Let's generate our types using the Apollo CLI:
 
 ```shell
->src/components/RecommendedProductsQuery.ts
+npx apollo client:codegen --endpoint=http://localhost:7071/graphql --target=typescript --outputFlat=src/_generated/
 ```
 
-4. Add our component and query
+**Note**: We'll have to delete the `globalTypes.ts` that was generated since we don't have any global types generated. Otherwise the empty file will show up in our *Problems* tab.
 
-```javascript
-import React, { Component } from 'react';
+4. Now we're going to create our first component that will use a GraphQL query:
+
+```shell
+>src/components/RecommendedProductsList.tsx
+```
+
+5. Add our imports and query to the component:
+
+```typescript
+import React from 'react';
 import { Query } from 'react-apollo';
+import { ApolloError } from 'apollo-client';
 import gql from 'graphql-tag';
+import { MyRecommendations, MyRecommendations_me_sugProducts } from '../_generated/MyRecommendations';
 
 const RecommendedProductsQuery = gql`
 	query MyRecommendations {
@@ -415,34 +426,59 @@ const RecommendedProductsQuery = gql`
 		}
 	}
 `;
+```
 
-export class RecommendedProductsList extends Component {
-	render = () => {
-		return (
-			<Query query={RecommendedProductsQuery}>
-				{({ data, loading, error }) => {
-					if (loading) return <p className="loading">loading...</p>;
-					if (error) return <p>ERROR</p>;
+6. Now we'll need to create an interface for typesafety that uses our generated type. We'll also have to create an associated View that utilizes the data returned from our GraphQL query: 
 
-					return (
-						<ul className="productList">
-							{data.me.sugProducts.map(product => {
-								return (
-									<li key={product.name}>
-										<div>
-											<p><b>{product.name}</b><price>{product.price}<br/>{product.inStock ? "In Stock" : "Not in stock"}</price></p>
-											{product.shortDesc}
-										</div>
-									</li>
-								)
-							})}
-						</ul>
-					);
-				}}
-			</Query>
-		);
-	}
+```typescript
+interface IProductsViewProps {
+	myRecommendations: MyRecommendations | undefined;
+	error?: ApolloError;
+	loading: boolean;
 }
+
+const RecommendedProductsListView = ({ myRecommendations, error, loading }: IProductsViewProps) => {
+	if (loading) {
+		return <div>LOADING </div>
+	} else if (myRecommendations) {
+		return (
+			<ul className="productList">
+				{myRecommendations.me.sugProducts.map((product: MyRecommendations_me_sugProducts) => (
+					<li key={product.name}>
+						<div>
+							<p><b>{product.name}</b> ${product.price}<br />{product.inStock ? "In Stock" : "Not in stock"}</p>
+							{product.shortDesc}
+						</div>
+					</li>
+				))}
+			</ul>
+		);
+	} else if (error) {
+		return <div>ERROR: {error.message} </div>
+	} else {
+		return <div>ERROR</div>
+	}
+};
+```
+
+7. Lastly, we'll just need to extend our `Query` from `react-apollo` and wire everything up:
+
+```typescript
+class ProductsQuery extends Query<MyRecommendations, {}> { }
+
+const RecommendedProductsList = () => (
+	<ProductsQuery query={RecommendedProductsQuery} >
+		{({ data, error, loading }) => (
+			<RecommendedProductsListView
+				myRecommendations={data}
+				error={error}
+				loading={loading}
+			/>
+		)}
+	</ProductsQuery>
+);
+
+export default RecommendedProductsList;
 ```
 
 5. Now add our component to the application, open our `App.js`:
@@ -451,7 +487,7 @@ export class RecommendedProductsList extends Component {
 import React from 'react';
 import './App.css';
 
-import {RecommendedProductsList} from './';
+import RecommendedProductsList from './components/RecommendedProductsList';
 
 function App() {
   return (

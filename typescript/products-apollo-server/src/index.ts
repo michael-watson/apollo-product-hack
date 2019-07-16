@@ -3,14 +3,14 @@ import { jsonServiceDatasource } from '../datasources/jsonServiceDatasource';
 
 const typeDefs = gql`
 	type Query {
-		me: User
+		me: User!
 	}
 	type User {
 		email: String!
-		sugProducts: [Product]
+		sugProducts: [Product!]!
 	}
 	type Product {
-		name: String
+		name: String!
 		shortDesc: String
 		price: Float
 		inStock: Boolean

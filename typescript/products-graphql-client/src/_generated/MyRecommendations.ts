@@ -8,7 +8,7 @@
 
 export interface MyRecommendations_me_sugProducts {
   __typename: "Product";
-  name: string | null;
+  name: string;
   shortDesc: string | null;
   price: number | null;
   inStock: boolean | null;
@@ -16,9 +16,9 @@ export interface MyRecommendations_me_sugProducts {
 
 export interface MyRecommendations_me {
   __typename: "User";
-  sugProducts: (MyRecommendations_me_sugProducts | null)[] | null;
+  sugProducts: MyRecommendations_me_sugProducts[];
 }
 
 export interface MyRecommendations {
-  me: MyRecommendations_me | null;
+  me: MyRecommendations_me;
 }

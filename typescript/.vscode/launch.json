@@ -2,17 +2,26 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "Attach to GraphQL Client",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}/products-graphql-client/src/index.tsx",
+			"preLaunchTask": "start client"
+		},
+		{
 			"type": "node",
 			"request": "launch",
-			"name": "Launch Program",
+			"name": "Launch GraphQL server",
 			"program": "${workspaceFolder}/products-apollo-server/src/index.ts",
-			"preLaunchTask": "tsc: build - tsconfig.json",
+			"cwd": "${workspaceFolder}/products-apollo-server/",
+			"preLaunchTask": "build apollo server",
 			"outFiles": [
 				"${workspaceFolder}/products-apollo-server/dist/**/*.js"
 			]
 		},
 		{
-			"name": "Attach to Node Functions",
+			"name": "Launch GraphQL server with Az Func",
 			"type": "node",
 			"request": "attach",
 			"port": 9229,
