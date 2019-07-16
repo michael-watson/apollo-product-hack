@@ -6,11 +6,11 @@ In this hackathon, we're going to take the example of an existing e-commercce ap
 
 For our first GraphQL feature, we're going to use the Recommended Products List that is displayed to our users (we'll ignore the styling for this POC)
 
-![image](recommended-products-list.png)
+![images/image](images/recommended-products-list.png)
 
 Now we need to design on GraphQL schema which can be challenging sometimes. One of the big advantages of GraphQL is having the ability to break the tight coupling between consumers and provider of the data served by your GraphQL server. I recommend you start with the ideal schema for the consumers of data and work towards that. Below is an example of the ideal query for our feature:
 
-![image](recommended-products.png)
+![images/image](images/recommended-products.png)
 
 ## Getting started
 
