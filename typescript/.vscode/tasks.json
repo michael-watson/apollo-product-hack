@@ -1,0 +1,65 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "func",
+			"command": "host start",
+			"problemMatcher": "$func-watch",
+			"isBackground": true,
+			"dependsOn": "build apollo-server azf",
+			"options": {
+				"cwd": "${workspaceFolder}/products-apollo-server-azf"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "build apollo-server azf",
+			"command": "npm run build",
+			"dependsOn": [
+				"func: extensions install",
+				"npm install apollo server azf"
+			],
+			"problemMatcher": "$tsc",
+			"options": {
+				"cwd": "${workspaceFolder}/products-apollo-server-azf"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "start client",
+			"command": "npm run start",
+			"problemMatcher": "$tsc",
+			"isBackground": true,
+			"runOptions": {},
+			"options": {
+				"cwd": "${workspaceFolder}/products-graphql-client"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "npm install apollo server azf",
+			"command": "npm install",
+			"options": {
+				"cwd": "${workspaceFolder}/products-apollo-server-azf"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "npm prune apollo server azf",
+			"command": "npm prune --production",
+			"dependsOn": "npm build",
+			"problemMatcher": [],
+			"options": {
+				"cwd": "${workspaceFolder}/products-apollo-server-azf"
+			}
+		},
+		{
+			"label": "build apollo server",
+			"type": "typescript",
+			"tsconfig": "products-apollo-server/tsconfig.json",
+			"problemMatcher": [
+				"$tsc"
+			]
+		}
+	]
+}

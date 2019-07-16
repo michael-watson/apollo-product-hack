@@ -1,0 +1,11 @@
+{
+	"files.exclude": {
+		"obj": true,
+		"bin": true
+	},
+	"azureFunctions.deploySubpath": "products-apollo-server-azf",
+	"azureFunctions.projectLanguage": "TypeScript",
+	"azureFunctions.projectRuntime": "~2",
+	"debug.internalConsoleOptions": "neverOpen",
+	"azureFunctions.preDeployTask": "npm prune"
+}
