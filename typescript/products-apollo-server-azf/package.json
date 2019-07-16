@@ -1,0 +1,26 @@
+{
+  "name": "products-apollo-server-azf",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build && func extensions install",
+    "start:host": "func start",
+    "start": "npm run start:host & npm run watch",
+    "build:production": "npm run prestart && npm prune --production",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@types/graphql": "^14.2.2",
+    "@types/node": "^12.6.2",
+    "apollo-datasource-rest": "^0.5.1",
+    "apollo-server": "^2.6.9",
+    "apollo-server-azure-functions": "^2.6.9",
+    "graphql": "^14.4.2"
+  },
+  "devDependencies": {
+    "@azure/functions": "^1.0.2-beta2",
+    "typescript": "^3.3.3"
+  }
+}

@@ -1,0 +1,18 @@
+{
+	"suggestedProducts": [
+		{
+			"email": "testymctest@test.com",
+			"name": "Product A",
+			"shortDesc": "Product description",
+			"price": 1.99,
+			"inStock": true
+		},
+		{
+			"email": "testymctest@test.com",
+			"name": "Product B",
+			"shortDesc": "Product description",
+			"price": 10.00,
+			"inStock": false
+		}
+	]
+}

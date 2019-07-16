@@ -1,0 +1,22 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Launch Program",
+			"program": "${workspaceFolder}/products-apollo-server/src/index.ts",
+			"preLaunchTask": "tsc: build - tsconfig.json",
+			"outFiles": [
+				"${workspaceFolder}/products-apollo-server/dist/**/*.js"
+			]
+		},
+		{
+			"name": "Attach to Node Functions",
+			"type": "node",
+			"request": "attach",
+			"port": 9229,
+			"preLaunchTask": "func: host start"
+		}
+	]
+}
