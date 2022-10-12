@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "apollo-datasource-rest": "^0.5.0",
-    "apollo-server": "^2.6.8",
+    "apollo-server": "^2.25.4",
     "apollo-server-azure-functions": "^2.6.8",
     "graphql": "^14.4.2"
   },
