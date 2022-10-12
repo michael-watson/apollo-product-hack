@@ -15,7 +15,7 @@
     "@types/graphql": "^14.2.2",
     "@types/node": "^12.6.2",
     "apollo-datasource-rest": "^0.5.1",
-    "apollo-server": "^2.6.9",
+    "apollo-server": "^2.25.4",
     "apollo-server-azure-functions": "^2.6.9",
     "graphql": "^14.4.2"
   },
